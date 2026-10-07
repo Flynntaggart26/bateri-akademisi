@@ -1,6 +1,11 @@
 export const PROGRESS_KEY = 'bateri-akademisi-progress-v1';
 export const LANGUAGE_KEY = 'bateri-akademisi-language-v1';
 export const DEFAULT_TEMPO = 92;
+const LEGACY_LESSON_MAP = {
+  'note-values': 'week-03-values', 'counting-meter': 'week-03-values', 'drum-notation': 'week-05-notation',
+  'first-groove': 'week-07-backbeat', coordination: 'week-06-coordination', rudiments: 'week-08-rudiments',
+  'groove-variations': 'week-10-dynamics', fills: 'week-11-fills', independence: 'week-12-final', 'odd-meter': 'week-12-final',
+};
 
 function browserStorage() {
   try { return globalThis.localStorage; } catch { return undefined; }
@@ -36,6 +41,10 @@ export function clampTempo(value) {
 
 export function beatIntervalMs(bpm) {
   return 60_000 / clampTempo(bpm);
+}
+
+export function migrateLegacyLessons(completedLessonIds) {
+  return [...new Set(completedLessonIds.map((id) => LEGACY_LESSON_MAP[id] ?? id))];
 }
 
 function normalizeProgress(value) {

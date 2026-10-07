@@ -48,6 +48,14 @@ test('writeProgress reports storage failures without throwing', () => {
   assert.equal(core.writeProgress(storage, { completedLessons: ['intro'], tempo: 100 }), false);
 });
 
+test('migrateLegacyLessons maps old course progress to equivalent weeks without duplicates', () => {
+  assert.deepEqual(core.migrateLegacyLessons(['first-groove', 'rudiments', 'first-groove', 'custom-id']), [
+    'week-07-backbeat',
+    'week-08-rudiments',
+    'custom-id',
+  ]);
+});
+
 test('readLanguage defaults to Turkish and accepts supported language choices', () => {
   assert.equal(core.readLanguage({ getItem: () => null }), 'tr');
   assert.equal(core.readLanguage({ getItem: () => 'en' }), 'en');
@@ -62,12 +70,16 @@ test('writeLanguage persists the selected supported language', () => {
   assert.deepEqual(savedValue, { key: 'bateri-akademisi-language-v1', value: 'en' });
 });
 
-test('each language has a translated navigation label and a complete lesson path', () => {
+test('each language has a translated navigation label and a complete 12-week lesson path', () => {
   assert.equal(i18n.messagesFor('tr').navLearning, 'Öğrenme yolu');
   assert.equal(i18n.messagesFor('en').navLearning, 'Learning path');
-  assert.equal(i18n.lessonsFor('tr').length, 10);
-  assert.equal(i18n.lessonsFor('en').length, 10);
-  assert.ok(i18n.lessonsFor('en').every((lesson) => lesson.title && lesson.description && lesson.content));
+  for (const language of ['tr', 'en']) {
+    const lessons = i18n.lessonsFor(language);
+    assert.equal(lessons.length, 12);
+    assert.deepEqual(lessons.map((lesson) => lesson.week), Array.from({ length: 12 }, (_, index) => index + 1));
+    assert.ok(lessons.every((lesson) => lesson.title && lesson.description && lesson.goal && lesson.concept && lesson.count && lesson.tempo && lesson.mastery && lesson.correction && lesson.application));
+    assert.ok(lessons.every((lesson) => lesson.practice.length === 3 && lesson.practice.every((step) => step.title && step.instruction)));
+  }
 });
 
 test('every marked page string has a translation in both supported languages', () => {

@@ -1,4 +1,4 @@
-import { beatIntervalMs, clampTempo, readLanguage, readProgress, writeLanguage, writeProgress } from './core.mjs';
+import { beatIntervalMs, clampTempo, migrateLegacyLessons, readLanguage, readProgress, writeLanguage, writeProgress } from './core.mjs';
 import { lessonsFor, messagesFor } from './i18n.mjs';
 
 const lessonGrid = document.querySelector('#lesson-grid');
@@ -6,6 +6,11 @@ let language = readLanguage();
 let messages = messagesFor(language);
 let lessons = lessonsFor(language);
 let progress = readProgress(safeStorage());
+const migratedLessons = migrateLegacyLessons(progress.completedLessons);
+if (migratedLessons.some((id, index) => id !== progress.completedLessons[index]) || migratedLessons.length !== progress.completedLessons.length) {
+  progress.completedLessons = migratedLessons;
+  writeProgress(safeStorage(), progress);
+}
 let activeFilter = 'all';
 let selectedLessonId = null;
 let audioContext = null;
@@ -86,9 +91,10 @@ function renderLessons() {
   lessonGrid.innerHTML = visibleLessons.map((lesson) => {
     const complete = progress.completedLessons.includes(lesson.id);
     return `<article class="lesson-card${complete ? ' is-complete' : ''}" style="--card-tone:${lesson.level === 'ileri' ? 'var(--olive)' : lesson.level === 'orta' ? '#c4a13e' : 'var(--orange)'}">
-      <div class="lesson-card-top"><span class="lesson-meta">${lesson.stage} <span>·</span> ${lesson.duration}</span><span class="lesson-level">${messages.levelNames[lesson.level]}</span></div>
+      <div class="lesson-card-top"><span class="lesson-meta">${messages.weekLabel.replace('{week}', lesson.week)} <span>·</span> ${lesson.stage}</span><span class="lesson-level">${messages.levelNames[lesson.level]}</span></div>
       <h3>${lesson.title}</h3><p>${lesson.description}</p>
-      <button class="lesson-open" data-lesson="${lesson.id}" aria-label="${lesson.title} — ${complete ? messages.lessonReview : messages.lessonOpen}"><span>${complete ? messages.lessonReview : messages.lessonOpen}</span><span class="lesson-complete-label">${complete ? messages.completedBadge : ''}</span><span aria-hidden="true">${complete ? '✓' : '↗'}</span></button>
+      <div class="lesson-card-goal"><span>${messages.outcomeLabel}</span>${lesson.goal}</div>
+      <button class="lesson-open" data-lesson="${lesson.id}" aria-label="${lesson.title} — ${complete ? messages.lessonReview : messages.lessonOpen}"><span>${complete ? messages.lessonReview : messages.lessonOpen}</span><span class="lesson-complete-label${complete ? ' is-complete' : ' is-duration'}">${complete ? messages.completedBadge : lesson.duration}</span><span aria-hidden="true">${complete ? '✓' : '↗'}</span></button>
     </article>`;
   }).join('');
   lessonGrid.querySelectorAll('[data-lesson]').forEach((button) => button.addEventListener('click', () => openLesson(button.dataset.lesson)));
@@ -101,14 +107,42 @@ function renderProgress() {
   document.querySelector('#progress-percent').textContent = String(Math.round((complete / total) * 100));
 }
 
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (character) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  })[character]);
+}
+
+function renderLessonContent(lesson) {
+  const practiceSteps = lesson.practice.map((step, index) => `
+    <li class="practice-step"><span class="practice-number">0${index + 1}</span><div><h4>${escapeHtml(step.title)}</h4><p>${escapeHtml(step.instruction)}</p></div></li>
+  `).join('');
+
+  return `
+    <div class="lesson-sheet">
+      <section class="lesson-objective"><span class="lesson-sheet-label">${messages.outcomeLabel}</span><p>${escapeHtml(lesson.goal)}</p></section>
+      <div class="lesson-concept-grid">
+        <section class="lesson-concept"><span class="lesson-sheet-label">${messages.conceptLabel}</span><p>${escapeHtml(lesson.concept)}</p></section>
+        <section class="lesson-count"><span class="lesson-sheet-label">${messages.countLabel}</span><code>${escapeHtml(lesson.count)}</code></section>
+      </div>
+      <section class="lesson-drills"><div class="lesson-drills-heading"><span class="lesson-sheet-label">${messages.practiceLabel}</span><span>01 — 02 — 03</span></div><ol>${practiceSteps}</ol></section>
+      <div class="lesson-tempo-row"><span class="lesson-tempo-icon">♩</span><div><span class="lesson-sheet-label">${messages.lessonTempoLabel}</span><p>${escapeHtml(lesson.tempo)}</p></div><span class="lesson-duration">${lesson.duration}</span></div>
+      <section class="lesson-feedback-grid">
+        <div class="lesson-mastery"><span class="lesson-sheet-label">${messages.masteryLabel}</span><p>${escapeHtml(lesson.mastery)}</p></div>
+        <div class="lesson-correction"><span class="lesson-sheet-label">${messages.correctionLabel}</span><p>${escapeHtml(lesson.correction)}</p></div>
+      </section>
+      <section class="lesson-application"><span class="lesson-sheet-label">${messages.applicationLabel}</span><p>${escapeHtml(lesson.application)}</p></section>
+    </div>`;
+}
+
 function openLesson(id) {
   const lesson = lessons.find((item) => item.id === id);
   if (!lesson) return;
   selectedLessonId = id;
-  document.querySelector('#dialog-level').textContent = `${lesson.stage}  ·  ${messages.levelNames[lesson.level]}  ·  ${lesson.duration}`;
+  document.querySelector('#dialog-level').textContent = `${messages.weekLabel.replace('{week}', lesson.week)}  ·  ${lesson.stage}  ·  ${messages.levelNames[lesson.level]}`;
   document.querySelector('#dialog-title').textContent = lesson.title;
   document.querySelector('#dialog-summary').textContent = lesson.description;
-  document.querySelector('#dialog-content').innerHTML = lesson.content;
+  document.querySelector('#dialog-content').innerHTML = renderLessonContent(lesson);
   const completeButton = document.querySelector('#complete-lesson');
   const complete = progress.completedLessons.includes(id);
   completeButton.disabled = complete;
