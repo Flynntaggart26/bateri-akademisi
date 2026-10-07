@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f3eb" />
+    <meta name="description" content="Nota okumayı, groove kurmayı ve bateriyi kendi hızında öğren. Türkçe, etkileşimli bateri atölyesi." />
+    <title>Bateri Akademisi — Ritmi oku. Seti konuştur.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./src/app.mjs"></script>
+  </head>
+  <body>
+    <div class="topline"><span class="topline-dot"></span> İyi müzik, iyi saymaktan başlar <span class="topline-spacer"></span><span>BUGÜNÜN TEMPOSU <b>♩ 92 BPM</b></span></div>
+
+    <header class="site-header">
+      <a class="brand" href="#baslangic" aria-label="Bateri Akademisi ana sayfa">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="brand-name">bateri<span>akademisi</span></span>
+      </a>
+      <nav class="main-nav" aria-label="Ana menü">
+        <a href="#ogrenme-yolu">Öğrenme yolu</a>
+        <a href="#nota-rehberi">Nota rehberi</a>
+        <a href="#ritim-laboratuvari">Ritim laboratuvarı</a>
+      </nav>
+      <a class="header-cta" href="#ogrenme-yolu">Derse başla <span aria-hidden="true">↗</span></a>
+      <button class="mobile-menu-toggle" aria-label="Menüyü aç" aria-expanded="false"><span></span><span></span></button>
+    </header>
+
+    <main id="baslangic">
+      <section class="hero page-shell" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <div class="eyebrow"><span>01</span><span class="eyebrow-rule"></span> HER SEVİYEYE AÇIK BİR ATÖLYE</div>
+          <h1 id="hero-title">Ritmi <em>oku.</em><br />Seti konuştur.</h1>
+          <p class="hero-lede">Nota kâğıdındaki işaretlerden ilk groove’una — bateriyi adım adım, duyarak ve çalarak öğren.</p>
+          <div class="hero-actions">
+            <a class="button button-dark" href="#ogrenme-yolu">Öğrenme yolunu keşfet <span>↗</span></a>
+            <a class="text-link" href="#ritim-laboratuvari"><span class="play-outline">▶</span> Hemen ritim dene</a>
+          </div>
+          <div class="hero-note"><span class="tiny-note">♬</span><span>Ön bilgi gerekmez.</span><span class="note-divider"></span><span>Kendi temponda ilerle.</span></div>
+        </div>
+
+        <div class="hero-art" aria-label="Bateri ritmi ve nota çizgilerinden oluşan illüstrasyon">
+          <div class="art-stamp">TEMELDEN<br />GROOVE'A</div>
+          <div class="staff staff-back"><span>𝅘𝅥𝅮</span><span>×</span><span>♩</span><span>×</span><span>𝅘𝅥𝅮</span></div>
+          <div class="staff staff-front"><span>×</span><span>♩</span><span>×</span><span>♩</span><span>×</span><span>♩</span></div>
+          <div class="hero-drum drum-one"><span></span></div>
+          <div class="hero-drum drum-two"><span></span></div>
+          <div class="hero-drum drum-three"><span></span></div>
+          <div class="hero-cymbal"></div>
+          <div class="art-caption"><span>01 / 04</span><span>HİSSET → SAY → ÇAL</span></div>
+          <div class="tempo-chip"><span class="tempo-pulse"></span><span><b>4/4</b><small>en sık duyacağın ölçü</small></span><span class="tempo-chip-note">♩ = 92</span></div>
+        </div>
+      </section>
+
+      <section class="intro-strip page-shell" aria-label="Atölye özellikleri">
+        <span><b>01</b> Türkçe ve anlaşılır</span><span><b>02</b> Çalarak öğren</span><span><b>03</b> İlerlemen sende kalsın</span>
+        <span class="strip-notation" aria-hidden="true">𝅘𝅥𝅮 ─── × ── ♩ ─── ×</span>
+      </section>
+
+      <section class="learning-section page-shell section-space" id="ogrenme-yolu">
+        <div class="section-heading">
+          <div><div class="eyebrow"><span>02</span><span class="eyebrow-rule"></span> ADIM ADIM GELİŞ</div><h2>Ritmi <em>inşa et.</em></h2></div>
+          <p>Önce notayı tanı, sonra ellerini ve ayaklarını aynı ritimde buluştur. Yolunu seç; gerisi pratik.</p>
+        </div>
+        <div class="path-tools">
+          <div class="level-tabs" role="group" aria-label="Dersleri seviyeye göre filtrele">
+            <button class="level-tab is-active" data-level="all" aria-pressed="true">Tüm yol</button>
+            <button class="level-tab" data-level="başlangıç" aria-pressed="false">Başlangıç</button>
+            <button class="level-tab" data-level="orta" aria-pressed="false">Orta seviye</button>
+            <button class="level-tab" data-level="ileri" aria-pressed="false">İleri</button>
+          </div>
+          <div class="progress-summary"><span class="progress-ring"><span id="progress-percent">0</span>%</span><span><b id="progress-count">0 / 10 ders</b><small>öğrenme yolundaki ilerlemen</small></span></div>
+        </div>
+        <div class="lesson-grid" id="lesson-grid" aria-live="polite"></div>
+        <div class="path-footer"><span>YOL HARİTASI <b>· 4 BASAMAK · 10 DERS</b></span><a href="#nota-rehberi">Önce notalara göz at <span>↓</span></a></div>
+      </section>
+
+      <section class="notation-section" id="nota-rehberi">
+        <div class="page-shell notation-layout">
+          <div class="notation-copy">
+            <div class="eyebrow"><span>03</span><span class="eyebrow-rule"></span> HIZLI BAŞVURU</div>
+            <h2>Notalar, <em>ritmin</em><br />alfabesi.</h2>
+            <p>Nota şekli sana sesi ne kadar tutacağını, ölçü içindeki yeri ise ne zaman çalacağını söyler. Önce süreleri öğren — bateride notalar perdeyi değil, davul parçasını anlatır.</p>
+            <a class="text-link notation-link" href="#ritim-laboratuvari">Şimdi bir ölçü dene <span>↗</span></a>
+            <div class="hand-note">küçük ipucu <span>Bir ve üçte kick, iki ve dörtte trampet — rock'ın kalp atışı.</span><b>✳</b></div>
+          </div>
+          <div class="notation-board">
+            <div class="board-top"><span>NOTA DEĞERLERİ / 4⁄4 ÖLÇÜ</span><span class="board-edition">KART NO. 001</span></div>
+            <div class="note-row"><div class="note-symbol whole-note" aria-hidden="true">𝅝</div><div class="note-info"><b>Birlik nota</b><span>4 vuruş sürer</span></div><div class="note-count">1 — 2 — 3 — 4</div></div>
+            <div class="note-row"><div class="note-symbol half-note" aria-hidden="true">𝅗𝅥</div><div class="note-info"><b>İkilik nota</b><span>2 vuruş sürer</span></div><div class="note-count">1 — 2 <i>·</i> 3 — 4</div></div>
+            <div class="note-row"><div class="note-symbol quarter-note" aria-hidden="true">♩</div><div class="note-info"><b>Dörtlük nota</b><span>1 vuruş sürer</span></div><div class="note-count">1 · 2 · 3 · 4</div></div>
+            <div class="note-row"><div class="note-symbol eighth-note" aria-hidden="true">♫</div><div class="note-info"><b>Sekizlik nota</b><span>½ vuruş sürer</span></div><div class="note-count">1 &amp; 2 &amp; 3 &amp; 4 &amp;</div></div>
+            <div class="note-row"><div class="note-symbol sixteenth-note" aria-hidden="true">♬</div><div class="note-info"><b>Onaltılık nota</b><span>¼ vuruş sürer</span></div><div class="note-count">1 e &amp; a · 2 e &amp; a</div></div>
+            <div class="board-foot"><span>◉ = vuruş / <i>·</i> = ara sayım</span><span>DAHA YAVAŞ SAY, DAHA TEMİZ ÇAL.</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="notation-map page-shell" aria-label="Bateri notasyonunun set parçalarıyla eşleşmesi">
+        <div class="map-heading"><span class="eyebrow"><span>↳</span><span class="eyebrow-rule"></span> DAVUL SETİ NOTASYONU</span><p>Nota çizgisinde her yerin bir sesi var.</p></div>
+        <div class="drum-map">
+          <div class="map-staff" aria-hidden="true"><span class="staff-line"></span><span class="staff-line"></span><span class="staff-line"></span><span class="staff-line"></span><span class="staff-line"></span><b class="map-x x1">×</b><b class="map-x x2">×</b><b class="map-note snare-note">●</b><b class="map-note kick-note">●</b><b class="map-x x3">×</b></div>
+          <div class="map-legend"><span><i class="legend-x">×</i> Hi-hat / zil</span><span><i class="legend-dot">●</i> Trampet</span><span><i class="legend-dot low-dot">●</i> Kick (bas davul)</span></div>
+          <span class="map-caption">ÖRNEK: 4 VURUŞLUK TEMEL ROCK</span>
+        </div>
+      </section>
+
+      <section class="lab-section" id="ritim-laboratuvari">
+        <div class="page-shell">
+          <div class="section-heading lab-heading">
+            <div><div class="eyebrow"><span>04</span><span class="eyebrow-rule"></span> DİNLE. DENE. TEKRARLA.</div><h2>Ritim <em>laboratuvarı.</em></h2></div>
+            <p>Kulaklığını tak, tempoyu seç ve ritmi elinle kur. Burada yanlış nota yok — sadece yeni bir deneme var.</p>
+          </div>
+          <div class="lab-grid">
+            <article class="lab-card pad-card">
+              <div class="lab-card-head"><div><span class="card-index">A / SESİ TANI</span><h3>Bateri pad’leri</h3></div><span class="keyboard-hint">KLAVYEDEN DE ÇAL <b>1—4</b></span></div>
+              <div class="pads" role="group" aria-label="Bateri padleri">
+                <button class="drum-pad kick-pad" data-drum="kick" data-key="1" aria-label="Kick, klavye tuşu 1"><span class="pad-key">1</span><span class="pad-icon kick-icon" aria-hidden="true"><i></i></span><b>KICK</b><small>bas davul</small></button>
+                <button class="drum-pad snare-pad" data-drum="snare" data-key="2" aria-label="Trampet, klavye tuşu 2"><span class="pad-key">2</span><span class="pad-icon snare-icon" aria-hidden="true"><i></i></span><b>SNARE</b><small>trampet</small></button>
+                <button class="drum-pad hat-pad" data-drum="hat" data-key="3" aria-label="Hi-hat, klavye tuşu 3"><span class="pad-key">3</span><span class="pad-icon hat-icon" aria-hidden="true"><i></i></span><b>HI-HAT</b><small>zil</small></button>
+                <button class="drum-pad tom-pad" data-drum="tom" data-key="4" aria-label="Tom, klavye tuşu 4"><span class="pad-key">4</span><span class="pad-icon tom-icon" aria-hidden="true"><i></i></span><b>TOM</b><small>orta davul</small></button>
+              </div>
+              <div class="pad-foot"><span class="sound-status-dot"></span><span id="sound-status" aria-live="polite">Ses için bir pad’e dokun.</span><span class="sound-note">SES TARAYICIDA ÜRETİLİR</span></div>
+            </article>
+
+            <article class="lab-card metronome-card">
+              <div class="lab-card-head"><div><span class="card-index">B / NABZI BUL</span><h3>Metronom</h3></div><span class="metronome-mark" aria-hidden="true">♩</span></div>
+              <div class="tempo-display"><span id="tempo-value">92</span><small>BPM</small><span class="tempo-word" id="tempo-word">YÜRÜYÜŞ</span></div>
+              <div class="tempo-control"><button class="tempo-nudge" data-change="-1" aria-label="Tempoyu bir BPM azalt">−</button><input id="tempo-slider" type="range" min="40" max="220" value="92" aria-label="Tempo: dakika başına vuruş" /><button class="tempo-nudge" data-change="1" aria-label="Tempoyu bir BPM artır">+</button></div>
+              <div class="tempo-scale"><span>40</span><span>YAVAŞ</span><span>220</span></div>
+              <div class="beat-lights" aria-label="Dört vuruş göstergesi"><i></i><i></i><i></i><i></i></div>
+              <div class="metro-actions"><button id="metro-toggle" class="button button-orange"><span class="button-play">▶</span> Metronomu başlat</button><button id="tap-tempo" class="tap-button">TEMPOYA DOKUN <span>⌁</span></button></div>
+            </article>
+          </div>
+
+          <article class="lab-card sequencer-card">
+            <div class="sequencer-top"><div class="lab-card-head"><div><span class="card-index">C / KENDİ GROOVE’UNU KUR</span><h3>16 adımlık ritim makinesi</h3></div></div><p>Hücrelere dokunup kick, trampet ve hi-hat’ini yerleştir.</p></div>
+            <div class="sequencer-body">
+              <div class="sequencer-grid" id="sequencer-grid" aria-label="Dört vuruş için on altı adımlı ritim düzenleyici"></div>
+              <div class="sequencer-controls"><div class="sequence-tempo"><span>RİTİM TEMPOSU</span><b id="sequence-tempo-value">92 <small>BPM</small></b><button class="small-step" data-sequence-change="-4" aria-label="Ritim temposunu azalt">−</button><button class="small-step" data-sequence-change="4" aria-label="Ritim temposunu artır">+</button></div><button id="pattern-toggle" class="button button-dark"><span class="button-play">▶</span> Pattern’i dinle</button><button id="clear-pattern" class="clear-button">Temizle <span>↺</span></button></div>
+            </div>
+            <div class="sequencer-footer"><span>İPUCU <b>·</b> Kick’i 1 ve 3’e, trampeti 2 ve 4’e yerleştir.</span><span>SEÇİLİ ADIMLARIN DÖNGÜSÜ</span></div>
+          </article>
+          <p class="lab-disclaimer">Sesler eğitim amaçlı sentezlenir. Enstrüman hissi için ses düzeyini rahat bir seviyede tut.</p>
+        </div>
+      </section>
+
+      <section class="closing-section page-shell">
+        <div class="closing-note" aria-hidden="true">𝅘𝅥𝅮</div><div class="closing-copy"><span class="eyebrow"><span>05</span><span class="eyebrow-rule"></span> SON SÖZ DEĞİL, İLK VURUŞ</span><h2>Her büyük groove,<br /><em>tek vuruşla</em> başlar.</h2><p>Bir dersi tamamla, yarın bir kez daha çal. İlerlemen bu tarayıcıda otomatik olarak hatırlanır.</p></div><a class="button button-dark closing-button" href="#ogrenme-yolu">İlk dersine dön <span>↑</span></a>
+      </section>
+    </main>
+
+    <footer class="site-footer"><a class="brand footer-brand" href="#baslangic"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="brand-name">bateri<span>akademisi</span></span></a><span>RİTMİNİ BUL. KENDİ SESİNİ ÇIKAR.</span><a href="#baslangic">BAŞA DÖN ↑</a></footer>
+
+    <dialog class="lesson-dialog" id="lesson-dialog" aria-labelledby="dialog-title">
+      <form method="dialog"><button class="dialog-close" aria-label="Dersi kapat">×</button></form>
+      <div class="dialog-eyebrow" id="dialog-level"></div><h2 id="dialog-title"></h2><p class="dialog-summary" id="dialog-summary"></p><div class="dialog-content" id="dialog-content"></div>
+      <button id="complete-lesson" class="button button-orange complete-button">Dersi tamamla <span>✓</span></button>
+      <span class="dialog-progress-note">İlerlemen yalnızca bu tarayıcıda saklanır.</span>
+    </dialog>
+    <div class="dialog-scrim" id="dialog-scrim" hidden></div>
+    <div class="sr-only" id="live-region" aria-live="polite"></div>
+  </body>
+</html>
