@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import * as core from '../src/core.mjs';
+import * as i18n from '../src/i18n.mjs';
 
 test('clampTempo keeps the metronome between 40 and 220 BPM', () => {
   assert.equal(core.clampTempo(18), 40);
@@ -44,4 +46,34 @@ test('writeProgress reports storage failures without throwing', () => {
   };
 
   assert.equal(core.writeProgress(storage, { completedLessons: ['intro'], tempo: 100 }), false);
+});
+
+test('readLanguage defaults to Turkish and accepts supported language choices', () => {
+  assert.equal(core.readLanguage({ getItem: () => null }), 'tr');
+  assert.equal(core.readLanguage({ getItem: () => 'en' }), 'en');
+  assert.equal(core.readLanguage({ getItem: () => 'fr' }), 'tr');
+});
+
+test('writeLanguage persists the selected supported language', () => {
+  let savedValue;
+  const storage = { setItem: (key, value) => { savedValue = { key, value }; } };
+
+  assert.equal(core.writeLanguage(storage, 'en'), true);
+  assert.deepEqual(savedValue, { key: 'bateri-akademisi-language-v1', value: 'en' });
+});
+
+test('each language has a translated navigation label and a complete lesson path', () => {
+  assert.equal(i18n.messagesFor('tr').navLearning, 'Öğrenme yolu');
+  assert.equal(i18n.messagesFor('en').navLearning, 'Learning path');
+  assert.equal(i18n.lessonsFor('tr').length, 10);
+  assert.equal(i18n.lessonsFor('en').length, 10);
+  assert.ok(i18n.lessonsFor('en').every((lesson) => lesson.title && lesson.description && lesson.content));
+});
+
+test('every marked page string has a translation in both supported languages', () => {
+  const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  const keys = [...html.matchAll(/data-i18n(?:-html|-aria)?="([^"]+)"/g)].map((match) => match[1]);
+  const missing = ['tr', 'en'].flatMap((language) => keys.filter((key) => typeof i18n.messagesFor(language)[key] !== 'string').map((key) => `${language}:${key}`));
+
+  assert.deepEqual(missing, []);
 });

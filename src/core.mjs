@@ -1,5 +1,32 @@
 export const PROGRESS_KEY = 'bateri-akademisi-progress-v1';
+export const LANGUAGE_KEY = 'bateri-akademisi-language-v1';
 export const DEFAULT_TEMPO = 92;
+
+function browserStorage() {
+  try { return globalThis.localStorage; } catch { return undefined; }
+}
+
+export function normalizeLanguage(value) {
+  return value === 'en' ? 'en' : 'tr';
+}
+
+export function readLanguage(storage = browserStorage()) {
+  try {
+    return normalizeLanguage(storage?.getItem(LANGUAGE_KEY));
+  } catch {
+    return 'tr';
+  }
+}
+
+export function writeLanguage(storage = browserStorage(), language) {
+  try {
+    if (!storage?.setItem) return false;
+    storage.setItem(LANGUAGE_KEY, normalizeLanguage(language));
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 export function clampTempo(value) {
   const numericTempo = Number(value);
