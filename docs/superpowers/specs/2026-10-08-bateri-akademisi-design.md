@@ -18,7 +18,7 @@ Etkileşimli ritim laboratuvarı: kavramları kısa derslerle anlatır, hemen ar
 
 ## Görsel ve etkileşim yönü
 
-Koyu prova stüdyosu atmosferi; krem nota kâğıdı yüzeyleri, sıcak turuncu vurgu ve ölçülü ses ekipmanı dokuları. Tipografi ritmik ve editoryal; dekoratif eşit aralıklı notalar, zaman çizgisi ve nota çizgileri içerikle ilişkili olacak. Geniş ekranda gezinme ve ders içeriği arasında belirgin hiyerarşi; mobilde tek sütuna inen, dokunmaya uygun kontroller. Hareketler kısa ve işlevsel, `prefers-reduced-motion` ayarına saygılı.
+Açık nota defteri atmosferi; krem ve beyaz yüzeyler, mürekkep siyahı çizgiler ve sıcak kırmızı-turuncu vurgular. Nota çizgileri, ritim işaretleri ve editoryal tipografi arayüze görsel karakter verir. Geniş ekranda gezinme ve ders içeriği arasında belirgin hiyerarşi; mobilde tek sütuna inen, dokunmaya uygun kontroller. Hareketler kısa ve işlevsel, `prefers-reduced-motion` ayarına saygılı.
 
 ## Uygulama sınırları
 
